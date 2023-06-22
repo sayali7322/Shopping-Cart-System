@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
+	
+	
 
 	public User findUserById(int userId) {
 		User user = userRepository.findById(userId).orElse(null);
@@ -31,6 +34,10 @@ public class UserService {
 	public String removeUser(int userId) {
 		userRepository.deleteById(userId);
 		return "User Deleted Successfully";
+	}
+
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
 	}
 
 }

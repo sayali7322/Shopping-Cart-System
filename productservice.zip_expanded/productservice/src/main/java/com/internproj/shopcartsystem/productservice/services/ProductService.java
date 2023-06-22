@@ -1,11 +1,12 @@
 package com.internproj.shopcartsystem.productservice.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import com.internproj.shopcartsystem.productservice.entities.Product;
 import com.internproj.shopcartsystem.productservice.repositories.ProductRepository;
+
 @Service
 public class ProductService {
 	
@@ -37,6 +38,10 @@ public class ProductService {
 	public String removeProduct(int prodId) {
 		productRepository.deleteById(prodId);
 		return "Product Deleted Successfully";
+	}
+
+	public List<Product> viewAllProducts() {
+		return productRepository.findAll();
 	}
 		
 

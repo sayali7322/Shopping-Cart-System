@@ -14,7 +14,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
 		.authorizeHttpRequests()
-		.requestMatchers("/product/viewProductByProdId/**")
+		.requestMatchers("/product/**")
 		.permitAll()
 		.and().formLogin();
 		

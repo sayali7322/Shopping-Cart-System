@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.service.UserService;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,11 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@GetMapping("/getAllUsers")
+	public List<User> getAllUsers(){
+		return service.getAllUsers(); 
+	}
 	
 	@GetMapping("/getUserById/{userId}")
 	public User getUserById(@PathVariable int userId) {

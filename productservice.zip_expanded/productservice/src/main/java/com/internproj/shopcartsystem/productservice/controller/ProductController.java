@@ -3,6 +3,7 @@ package com.internproj.shopcartsystem.productservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,16 @@ import com.internproj.shopcartsystem.productservice.services.ProductService;
 
 @RestController
 @RequestMapping("/product")
+@FeignClient(name = "PRODUCT-CONTROLLER")
 public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@GetMapping("/viewAllProducts")
+	public List<Product> viewAllProducts(){
+		return productService.viewAllProducts();
+	}
 	
 	@GetMapping("/viewProductByProdId/{prodId}")
 	public Product viewProductByProdId(@PathVariable int prodId) {

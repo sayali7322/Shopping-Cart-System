@@ -2,15 +2,23 @@ package org.springframework.boot.userservice.entrity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 	
 	@Id
@@ -25,12 +33,15 @@ public class User {
 	private String role;
 	private String password;
 	
+	@Transient
+	private List<Rating> ratings;
+	
 	public User() {
 		
 	}
 	
 	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
-			String role, String password) {
+			String role, String password, List<Rating> ratings) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -40,6 +51,7 @@ public class User {
 		this.gender = gender;
 		this.role = role;
 		this.password = password;
+		this.ratings = ratings;
 	}
 
 
@@ -106,7 +118,18 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 	
 	
 }
