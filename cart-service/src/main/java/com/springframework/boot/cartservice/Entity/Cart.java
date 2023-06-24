@@ -2,7 +2,7 @@ package com.springframework.boot.cartservice.Entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Cart")
+
 public class Cart {
 	
 	private int cartId;

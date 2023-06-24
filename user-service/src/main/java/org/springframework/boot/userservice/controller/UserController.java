@@ -31,14 +31,37 @@ public class UserController {
 		return service.findUserById(userId);
 	}
 	
-	@PostMapping("/addUsers")
-	public List<User> addUsers(@RequestBody List<User> users){
-		return service.addUsers(users);
+	/*
+	 * @PostMapping("/registerUsers") public List<User> addUsers(@RequestBody
+	 * List<User> users){ return service.addUsers(users); }
+	 */
+	
+	@PostMapping("/registerUser")
+	public User addUser(@RequestBody User user) throws Exception{
+		String tempEmailId = user.getUserEmail();
+		if(tempEmailId != null && !"".equals(tempEmailId)) {
+			User userobj =  service.fetchUserByEmailId(tempEmailId);
+			if(userobj != null) {
+				throw new Exception("user with "+tempEmailId+" is already exist");
+			}
+		}
+		User userObj = null;
+		userObj = service.addUser(user);
+		return userObj;
 	}
 	
-	@PostMapping("/addUser")
-	public User addUser(@RequestBody User user){
-		return service.addUser(user);
+	@PostMapping("/login")
+	public User loginUser(@RequestBody User user) throws Exception {
+		String tempEmailId = user.getUserEmail();
+		String tempPassword = user.getPassword();
+		User userObj = null; 
+		if(tempEmailId != null && tempPassword != null) {
+			userObj =  service.fetchUserByEmailIdAndPassword(tempEmailId, tempPassword);
+		}
+		if(userObj == null) {
+			throw new Exception("Bad Credentials!");
+		}
+		return userObj;
 	}
 	
 	@DeleteMapping("/removeUser/{userId}")
