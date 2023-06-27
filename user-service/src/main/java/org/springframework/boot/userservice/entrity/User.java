@@ -27,7 +27,7 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private long phoneNo;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "mm/dd/yyyy")
 	private LocalDate dateOfBirth;
 	private String gender;
 	private String role;

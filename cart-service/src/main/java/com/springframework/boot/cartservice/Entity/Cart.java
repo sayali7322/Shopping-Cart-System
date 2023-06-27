@@ -1,10 +1,14 @@
 package com.springframework.boot.cartservice.Entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-
+@Entity
 public class Cart {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartId;
 	private String prodName;
 	private double price;
