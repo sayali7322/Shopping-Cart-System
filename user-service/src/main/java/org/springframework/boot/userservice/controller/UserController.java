@@ -1,12 +1,10 @@
 package org.springframework.boot.userservice.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.service.UserService;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @RestController
 @RequestMapping("/user")
@@ -23,9 +25,10 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-//	
+	
+	@Autowired
+	private AuthenticationManager authmanager;
+	
 	
 	@GetMapping("/getAllUsers")
 	public List<User> getAllUsers(){
@@ -53,8 +56,7 @@ public class UserController {
 			}
 		}
 		User userObj = null;
-		userObj = service.addUser(user);
-//		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+		userObj = service.register(user);
 		return userObj;
 	}
 	
@@ -77,4 +79,6 @@ public class UserController {
 	public String removeUser(@PathVariable int userId) {
 		return service.removeUser(userId);
 	}
+	
+	
 }

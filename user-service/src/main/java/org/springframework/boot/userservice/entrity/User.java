@@ -3,6 +3,9 @@ package org.springframework.boot.userservice.entrity;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import org.springframework.boot.userservice.enums.UserRole;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,8 +33,9 @@ public class User {
 	@JsonFormat(pattern = "mm/dd/yyyy")
 	private LocalDate dateOfBirth;
 	private String gender;
-	private String role;
 	private String password;
+	private UserRole userRole;
+	private byte[] img;
 	
 	@Transient
 	private List<Rating> ratings;
@@ -40,8 +44,9 @@ public class User {
 		
 	}
 	
+
 	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
-			String role, String password, List<Rating> ratings) {
+			String password, UserRole userRole, byte[] img, List<Rating> ratings) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -49,10 +54,12 @@ public class User {
 		this.phoneNo = phoneNo;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
-		this.role = role;
 		this.password = password;
+		this.userRole = userRole;
+		this.img = img;
 		this.ratings = ratings;
 	}
+
 
 
 	public int getUserId() {
@@ -103,13 +110,13 @@ public class User {
 		this.gender = gender;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+//	public String getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(String role) {
+//		this.role = role;
+//	}
 
 	public String getPassword() {
 		return password;
@@ -131,5 +138,21 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
 	
 }
