@@ -3,9 +3,6 @@ package org.springframework.boot.userservice.entrity;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import org.springframework.boot.userservice.enums.UserRole;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,8 +31,9 @@ public class User {
 	private LocalDate dateOfBirth;
 	private String gender;
 	private String password;
-	private UserRole userRole;
+	private String userRole;
 	private byte[] img;
+	private String access_token;
 	
 	@Transient
 	private List<Rating> ratings;
@@ -46,7 +44,7 @@ public class User {
 	
 
 	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
-			String password, UserRole userRole, byte[] img, List<Rating> ratings) {
+			String password, String userRole, byte[] img, List<Rating> ratings, String access_token) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -58,6 +56,8 @@ public class User {
 		this.userRole = userRole;
 		this.img = img;
 		this.ratings = ratings;
+		this.access_token = access_token;
+
 	}
 
 
@@ -138,11 +138,11 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public UserRole getUserRole() {
+	public String getUserRole() {
 		return userRole;
 	}
 
-	public void setUserRole(UserRole userRole) {
+	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
 
@@ -153,6 +153,13 @@ public class User {
 	public void setImg(byte[] img) {
 		this.img = img;
 	}
+	
+	public String getAccess_token() {
+	     return access_token;
+	}
 
+	public void setAccess_token(String access_token) {
+	     this.access_token = access_token;
+	}
 	
 }
