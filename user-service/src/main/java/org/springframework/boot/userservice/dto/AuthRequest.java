@@ -2,7 +2,7 @@ package org.springframework.boot.userservice.dto;
 
 public class AuthRequest {
 	
-	private String userName;
+	private String userEmail;
 	private String password;
 	
 	
@@ -10,16 +10,16 @@ public class AuthRequest {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AuthRequest(String userName, String password) {
+	public AuthRequest(String userEmail, String password) {
 		super();
-		this.userName = userName;
+		this.userEmail = userEmail;
 		this.password = password;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setUsername(String userName) {
-		this.userName = userName;
+	public void setUsername(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	public String getPassword() {
 		return password;

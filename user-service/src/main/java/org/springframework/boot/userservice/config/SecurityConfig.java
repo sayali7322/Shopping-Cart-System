@@ -36,15 +36,17 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf().disable()
 		.authorizeHttpRequests()
-		.requestMatchers("/user/register", "/user/authenticate", "user/login").permitAll()
+		.requestMatchers("/user/registerUser", "/user/authenticate", "user/login").permitAll()
+		.requestMatchers(PUBLIC_URLS).permitAll()
 		.and()
-		.authorizeHttpRequests().requestMatchers("/user/getAllUsers/**","/user/getUserById").hasRole("Admin")
+		.authorizeHttpRequests().requestMatchers("").authenticated()
 		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.authenticationProvider(authenticationProvider())
 		.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+//		.formLogin().and()
 		.build();
 	}
 	
@@ -66,4 +68,12 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
+	
+	private static final String[] PUBLIC_URLS = {
+		"/api/v1/auth/**",
+		"/v3/api-docs/**",
+		"/v3/api-docs.yaml",
+		"/swagger-ui/**",
+		"/swagger-ui.html"
+	};
 }

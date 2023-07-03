@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/user")
@@ -34,7 +35,9 @@ public class UserController {
 	@Autowired
 	private AuthenticationManager authmanager;
 	
-	
+	 @Autowired
+	 public PasswordEncoder passwordEncoder;
+	    
 	
 	@GetMapping("/getAllUsers")
 	public List<User> getAllUsers(){
@@ -66,20 +69,44 @@ public class UserController {
 		return userObj;
 	}
 	
+//	@PostMapping("/login")
+//	@CrossOrigin(origins = "http://localhost:4200")
+//	public User loginUser(@RequestBody User user) throws Exception {
+//		String tempEmailId = user.getUserEmail();
+//		String tempPassword = user.getPassword();
+//		User userObj = null; 
+//		if(tempEmailId != null && tempPassword != null) {
+//			userObj =  service.fetchUserByEmailIdAndPassword(tempEmailId, tempPassword);
+//		}
+//		if(userObj == null) {
+//			throw new Exception("Bad Credentials!");
+//		}
+//		return userObj;
+//	}
+	
 	@PostMapping("/login")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public User loginUser(@RequestBody User user) throws Exception {
-		String tempEmailId = user.getUserEmail();
-		String tempPassword = user.getPassword();
-		User userObj = null; 
-		if(tempEmailId != null && tempPassword != null) {
-			userObj =  service.fetchUserByEmailIdAndPassword(tempEmailId, tempPassword);
-		}
-		if(userObj == null) {
-			throw new Exception("Bad Credentials!");
-		}
-		return userObj;
+	    String tempEmailId = user.getUserEmail();
+	    String tempPassword = user.getPassword();
+
+	    if (tempEmailId == null || tempPassword == null) {
+	        throw new Exception("Invalid request: Email and password are required.");
+	    }
+
+	    User userObj = service.fetchUserByEmailId(tempEmailId);
+	    if (userObj == null) {
+	        throw new Exception("User not found with the provided email.");
+	    }
+
+	    // Perform password comparison using the appropriate method for your password hashing mechanism
+	    if (!passwordEncoder.matches(tempPassword, userObj.getPassword())) {
+	        throw new Exception("Invalid credentials: Incorrect password.");
+	    }
+
+	    return userObj;
 	}
+
 	
 	@DeleteMapping("/removeUser/{userId}")
 	public String removeUser(@PathVariable int userId) {
@@ -88,12 +115,12 @@ public class UserController {
 	
 	@PostMapping("/authenticate")
 	public String authenticateAndGetToken(@RequestBody AuthRequest authrequest) {
-		Authentication auth = authmanager.authenticate(new UsernamePasswordAuthenticationToken(authrequest.getUserName(),authrequest.getPassword()));
+		Authentication auth = authmanager.authenticate(new UsernamePasswordAuthenticationToken(authrequest.getUserEmail(),authrequest.getPassword()));
 		if(auth.isAuthenticated()) {
-			return jwtService.generateToken(authrequest.getUserName());
+			return jwtService.generateToken(authrequest.getUserEmail());
 		}
 		else {
-			throw new UsernameNotFoundException("Could not found the user :"+authrequest.getUserName());
+			throw new UsernameNotFoundException("Could not found the user :"+authrequest.getUserEmail());
 		}
 	}
 }

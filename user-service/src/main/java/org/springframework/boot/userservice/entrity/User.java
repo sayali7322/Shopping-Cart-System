@@ -15,10 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 	
 	@Id
@@ -27,13 +23,13 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private long phoneNo;
-	@JsonFormat(pattern = "mm/dd/yyyy")
+	@JsonFormat(pattern = "dd-mm-yyyy")
 	private LocalDate dateOfBirth;
 	private String gender;
 	private String password;
 	private String userRole;
-	private byte[] img;
-	private String access_token;
+//	private byte[] img;
+//	private String access_token;
 	
 	@Transient
 	private List<Rating> ratings;
@@ -41,10 +37,9 @@ public class User {
 	public User() {
 		
 	}
-	
 
 	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
-			String password, String userRole, byte[] img, List<Rating> ratings, String access_token) {
+			String password, String userRole, List<Rating> ratings) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -54,13 +49,8 @@ public class User {
 		this.gender = gender;
 		this.password = password;
 		this.userRole = userRole;
-		this.img = img;
 		this.ratings = ratings;
-		this.access_token = access_token;
-
 	}
-
-
 
 	public int getUserId() {
 		return userId;
@@ -110,13 +100,13 @@ public class User {
 		this.gender = gender;
 	}
 
-//	public String getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(String role) {
-//		this.role = role;
-//	}
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setRole(String userRole) {
+		this.userRole = userRole;
+	}
 
 	public String getPassword() {
 		return password;
@@ -138,28 +128,12 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public String getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
-
-	public byte[] getImg() {
-		return img;
-	}
-
-	public void setImg(byte[] img) {
-		this.img = img;
-	}
-	
-	public String getAccess_token() {
-	     return access_token;
-	}
-
-	public void setAccess_token(String access_token) {
-	     this.access_token = access_token;
-	}
+//	public String getUserRole() {
+//		return userRole;
+//	}
+//
+//	public void setUserRole(String userRole) {
+//		this.userRole = userRole;
+//	}
 	
 }

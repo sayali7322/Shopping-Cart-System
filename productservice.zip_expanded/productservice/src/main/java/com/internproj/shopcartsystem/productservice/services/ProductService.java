@@ -13,8 +13,8 @@ public class ProductService {
 	@Autowired
 	ProductRepository  productRepository;
 	
-	public Product viewProductByProdId(int prodId) {	
-		Product product = productRepository.findById(prodId).orElse(null);
+	public Product viewProductByProdId(int productId) {	
+		Product product = productRepository.findById(productId).orElse(null);
 		//product.setRating(ratingService.viewRatingsByProdId(prodId));
 		return product;		
 	}
@@ -23,8 +23,8 @@ public class ProductService {
 		return productRepository.findAllByCategory(category);
 	}
 	
-	public List<Product> viewProductsByProdName(String prodName){
-		return productRepository.findAllByProdName(prodName);
+	public List<Product> viewProductsByProdName(String productName){
+		return productRepository.findAllByProductName(productName);
 	}
 	
 	public List<Product> addProducts(List<Product> products){
@@ -35,8 +35,8 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 	
-	public String removeProduct(int prodId) {
-		productRepository.deleteById(prodId);
+	public String removeProduct(int productId) {
+		productRepository.deleteById(productId);
 		return "Product Deleted Successfully";
 	}
 

@@ -1,9 +1,8 @@
 package com.internproj.shopcartsystem.productservice.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
+//import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.internproj.shopcartsystem.productservice.entities.Product;
 import com.internproj.shopcartsystem.productservice.services.ProductService;
 
 @RestController
 @RequestMapping("/product")
-@FeignClient(name = "PRODUCT-CONTROLLER")
 public class ProductController {
 	
 	@Autowired
@@ -28,9 +25,9 @@ public class ProductController {
 		return productService.viewAllProducts();
 	}
 	
-	@GetMapping("/viewProductByProdId/{prodId}")
-	public Product viewProductByProdId(@PathVariable int prodId) {
-		return productService.viewProductByProdId(prodId);
+	@GetMapping("/viewProductByProdId/{productId}")
+	public Product viewProductByProdId(@PathVariable int productId) {
+		return productService.viewProductByProdId(productId);
 	}
 
 	@GetMapping("/viewProductsByCategory/{category}")
@@ -38,9 +35,9 @@ public class ProductController {
 			return productService.viewProductsByCategory(category);
 		}
 		
-	@GetMapping("/viewProductByProdName/{prodName}")
-		public List<Product> viewProductsByProdName(@PathVariable String prodName){
-			return productService.viewProductsByProdName(prodName);
+	@GetMapping("/viewProductByProdName/{productName}")
+		public List<Product> viewProductsByProdName(@PathVariable String productName){
+			return productService.viewProductsByProdName(productName);
 		}
 		
 	@PostMapping("/addProducts")
@@ -53,9 +50,9 @@ public class ProductController {
 			return productService.addProduct(product);
 		}
 		
-	@DeleteMapping("/removeProduct/{prodId}")
-		public String removeProduct(@PathVariable int prodId) {
-			productService.removeProduct(prodId);
+	@DeleteMapping("/removeProduct/{productId}")
+		public String removeProduct(@PathVariable int productId) {
+			productService.removeProduct(productId);
 			return "deleted";
 		}
 }
