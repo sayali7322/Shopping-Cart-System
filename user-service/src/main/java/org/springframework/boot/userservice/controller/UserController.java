@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -55,7 +56,7 @@ public class UserController {
 	 */
 	
 	@PostMapping("/registerUser")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:50396")
 	public Object addUser(@RequestBody User user) throws Exception{
 		String tempEmailId = user.getUserEmail();
 		if(tempEmailId != null && !"".equals(tempEmailId)) {
@@ -69,42 +70,31 @@ public class UserController {
 		return userObj;
 	}
 	
-//	@PostMapping("/login")
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	public User loginUser(@RequestBody User user) throws Exception {
-//		String tempEmailId = user.getUserEmail();
-//		String tempPassword = user.getPassword();
-//		User userObj = null; 
-//		if(tempEmailId != null && tempPassword != null) {
-//			userObj =  service.fetchUserByEmailIdAndPassword(tempEmailId, tempPassword);
-//		}
-//		if(userObj == null) {
-//			throw new Exception("Bad Credentials!");
-//		}
-//		return userObj;
-//	}
 	
 	@PostMapping("/login")
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "http://localhost:50396")
 	public User loginUser(@RequestBody User user) throws Exception {
-	    String tempEmailId = user.getUserEmail();
+
+		String tempEmailId = user.getUserEmail();
 	    String tempPassword = user.getPassword();
+	   
+	    if (tempEmailId != null && tempPassword != null) {
+	        // Retrieve the user from the database based on the email
+	        User userFromDatabase = service.fetchUserByEmailId(tempEmailId);
 
-	    if (tempEmailId == null || tempPassword == null) {
-	        throw new Exception("Invalid request: Email and password are required.");
+	        if (userFromDatabase != null) {
+	            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	            // Compare the input password with the stored password
+	            if (passwordEncoder.matches(tempPassword, userFromDatabase.getPassword())) {
+	                // Passwords match, return the user
+//	                return "Login Successful";
+	            	return user;
+	            }
+	        }
 	    }
 
-	    User userObj = service.fetchUserByEmailId(tempEmailId);
-	    if (userObj == null) {
-	        throw new Exception("User not found with the provided email.");
-	    }
-
-	    // Perform password comparison using the appropriate method for your password hashing mechanism
-	    if (!passwordEncoder.matches(tempPassword, userObj.getPassword())) {
-	        throw new Exception("Invalid credentials: Incorrect password.");
-	    }
-
-	    return userObj;
+	    throw new Exception("Bad Credentials!");
+		
 	}
 
 	

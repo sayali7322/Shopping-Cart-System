@@ -19,37 +19,47 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 	
 	@Autowired
 	private JwtAuthFilter filter;
-
+	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CartUserUserDetailsService();
 	}
 	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+//        
 		return http.csrf().disable()
-		.authorizeHttpRequests()
-		.requestMatchers("/user/registerUser", "/user/authenticate", "user/login").permitAll()
-		.requestMatchers(PUBLIC_URLS).permitAll()
-		.and()
-		.authorizeHttpRequests().requestMatchers("").authenticated()
-		.and()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		.authenticationProvider(authenticationProvider())
-		.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-//		.formLogin().and()
-		.build();
-	}
-	
+	            .authorizeRequests()
+	            .requestMatchers(request -> {
+	                String servletPath = request.getServletPath();
+	                return "/users/addUser".equals(servletPath)
+	                        || "/users/authenticate".equals(servletPath)
+	                        || "/users/login".equals(servletPath);
+	            }).permitAll()
+	            .requestMatchers(PUBLIC_URLS).permitAll()
+	            .requestMatchers(request -> {
+	                String servletPath = request.getServletPath();
+	                return "/users/getallusers".equals(servletPath)
+	                        || request.getContextPath().matches("/users/viewByEmailId/.*")
+	                        || request.getContextPath().matches("/users/viewByProfileId/.*");
+	            }).authenticated()
+	            .and()
+	            .sessionManagement()
+	            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	            .and()
+	            .authenticationProvider(authenticationProvider())
+	            .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+	            .build();
+    }
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -69,11 +79,12 @@ public class SecurityConfig {
 		return config.getAuthenticationManager();
 	}
 	
-	private static final String[] PUBLIC_URLS = {
-		"/api/v1/auth/**",
-		"/v3/api-docs/**",
-		"/v3/api-docs.yaml",
-		"/swagger-ui/**",
-		"/swagger-ui.html"
-	};
+	 private static final String[] PUBLIC_URLS = { 
+			 "/api/v1/auth/**",
+			 "/v3/api-docs/**", 
+			 "/v3/api-docs.yaml", 
+			 "/swagger-ui/**",
+			 "/swagger-ui.html"
+	 };
+			 
 }
