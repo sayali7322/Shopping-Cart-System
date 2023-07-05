@@ -23,7 +23,8 @@ public class User {
 	private String userName;
 	private String userEmail;
 	private long phoneNo;
-	@JsonFormat(pattern = "dd-mm-yyyy")
+//	@JsonFormat(pattern = "dd-mm-yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	private String gender;
 	private String password;
@@ -127,6 +128,13 @@ public class User {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", phoneNo=" + phoneNo
+				+ ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", password=" + password + ", userRole="
+				+ userRole + ", ratings=" + ratings + "]";
+	}
 	
 //	public String getUserRole() {
 //		return userRole;
@@ -135,5 +143,7 @@ public class User {
 //	public void setUserRole(String userRole) {
 //		this.userRole = userRole;
 //	}
+	
+	
 	
 }

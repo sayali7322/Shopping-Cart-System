@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
 	@Autowired
@@ -50,13 +51,9 @@ public class UserController {
 		return service.findUserById(userId);
 	}
 	
-	/*
-	 * @PostMapping("/registerUsers") public List<User> addUsers(@RequestBody
-	 * List<User> users){ return service.addUsers(users); }
-	 */
 	
 	@PostMapping("/registerUser")
-	@CrossOrigin(origins = "http://localhost:50396")
+	@CrossOrigin(origins = "http://localhost:4200")
 	public Object addUser(@RequestBody User user) throws Exception{
 		String tempEmailId = user.getUserEmail();
 		if(tempEmailId != null && !"".equals(tempEmailId)) {
@@ -71,13 +68,39 @@ public class UserController {
 	}
 	
 	
-	@PostMapping("/login")
-	@CrossOrigin(origins = "http://localhost:50396")
-	public User loginUser(@RequestBody User user) throws Exception {
+//	@PostMapping("/login")
+//	@CrossOrigin(origins = "http://localhost:4200")
+//	public User loginUser(@RequestBody User user) throws Exception {
+//
+//		String tempEmailId = user.getUserEmail();
+//	    String tempPassword = user.getPassword();
+//	   
+//	    if (tempEmailId != null && tempPassword != null) {
+//	        // Retrieve the user from the database based on the email
+//	        User userFromDatabase = service.fetchUserByEmailId(tempEmailId);
+//
+//	        if (userFromDatabase != null) {
+//	            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//	            // Compare the input password with the stored password
+//	            if (passwordEncoder.matches(tempPassword, userFromDatabase.getPassword())) {
+//	                // Passwords match, return the user
+////	                return "Login Successful";
+//	            	return user;
+//	            }
+//	        }
+//	    }
+//
+//	    throw new Exception("Bad Credentials!");
+//		
+//	}
 
-		String tempEmailId = user.getUserEmail();
+	
+	@PostMapping("/login")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public ResponseEntity<User> loginUser(@RequestBody User user) throws Exception {
+	    String tempEmailId = user.getUserEmail();
 	    String tempPassword = user.getPassword();
-	   
+
 	    if (tempEmailId != null && tempPassword != null) {
 	        // Retrieve the user from the database based on the email
 	        User userFromDatabase = service.fetchUserByEmailId(tempEmailId);
@@ -87,16 +110,13 @@ public class UserController {
 	            // Compare the input password with the stored password
 	            if (passwordEncoder.matches(tempPassword, userFromDatabase.getPassword())) {
 	                // Passwords match, return the user
-//	                return "Login Successful";
-	            	return user;
+	                return ResponseEntity.ok(userFromDatabase);
 	            }
 	        }
 	    }
 
 	    throw new Exception("Bad Credentials!");
-		
 	}
-
 	
 	@DeleteMapping("/removeUser/{userId}")
 	public String removeUser(@PathVariable int userId) {

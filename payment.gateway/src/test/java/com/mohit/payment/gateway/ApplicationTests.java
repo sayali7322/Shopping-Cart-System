@@ -1,10 +1,10 @@
-package org.springframework.boot.payPalpaymentgateway;
+package com.mohit.payment.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PayPalPaymentGatewayApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

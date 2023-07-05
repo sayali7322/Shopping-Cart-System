@@ -3,6 +3,7 @@ package com.internproj.shopcartsystem.cartservice.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import lombok.Setter;
 //@NoArgsConstructor
 public class Cart {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartId;
 	private  int userId;
 	private int quantity;

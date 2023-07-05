@@ -41,16 +41,16 @@ public class SecurityConfig {
 	            .authorizeRequests()
 	            .requestMatchers(request -> {
 	                String servletPath = request.getServletPath();
-	                return "/users/addUser".equals(servletPath)
-	                        || "/users/authenticate".equals(servletPath)
-	                        || "/users/login".equals(servletPath);
+	                return "/user/registerUser".equals(servletPath)
+	                        || "/user/authenticate".equals(servletPath)
+	                        || "/user/login".equals(servletPath);
 	            }).permitAll()
 	            .requestMatchers(PUBLIC_URLS).permitAll()
 	            .requestMatchers(request -> {
 	                String servletPath = request.getServletPath();
-	                return "/users/getallusers".equals(servletPath)
-	                        || request.getContextPath().matches("/users/viewByEmailId/.*")
-	                        || request.getContextPath().matches("/users/viewByProfileId/.*");
+	                return "/user/getallusers".equals(servletPath)
+	                        || request.getContextPath().matches("/user/viewByEmailId/.*")
+	                        || request.getContextPath().matches("/user/viewByProfileId/.*");
 	            }).authenticated()
 	            .and()
 	            .sessionManagement()
