@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.internproj.shopcartsystem.cartservice.entities.Product;
 
 
-@FeignClient(name="PRODUCT-SERVICE")
+@FeignClient(name="product-service", url="http://localhost:8081/")
 public interface ProductService {
 	
-	@GetMapping("/product/viewProduct/{productId}")
-	public Product viewProduct(@PathVariable int productId);
+	@GetMapping("/product/viewProductByProdId/{productId}")
+	public Product viewProductByProdId(@PathVariable int productId);
 
 }

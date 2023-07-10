@@ -1,4 +1,4 @@
-package com.eshoppingzone;
+package com.springboot.orderservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

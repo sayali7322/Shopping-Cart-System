@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.userservice.controller.UserController;
-import org.springframework.boot.userservice.dto.AuthRequest;
+import org.springframework.boot.userservice.dto.JwtRequest;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.service.JwtService;
 import org.springframework.boot.userservice.service.UserService;

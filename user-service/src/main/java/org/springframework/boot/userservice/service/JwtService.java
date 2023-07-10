@@ -5,7 +5,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.userservice.dto.JwtRequest;
+import org.springframework.boot.userservice.dto.JwtResponse;
+import org.springframework.boot.userservice.entrity.User;
+import org.springframework.boot.userservice.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -65,5 +72,5 @@ public class JwtService {
 		byte[] keyBytes = Decoders.BASE64.decode(SECRET);
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
-
+	   
 }

@@ -8,6 +8,8 @@ import com.internproj.shopcartsystem.cartservice.entities.Cart;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer>{
 
-	boolean findByProdName(String prodName);
+	Cart findByProductName(String productName);
+
+	Cart findByUserEmail(String userEmail);
 
 }

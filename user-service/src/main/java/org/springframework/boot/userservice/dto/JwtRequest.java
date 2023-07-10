@@ -1,16 +1,16 @@
 package org.springframework.boot.userservice.dto;
 
-public class AuthRequest {
+public class JwtRequest {
 	
 	private String userEmail;
 	private String password;
 	
 	
-	public AuthRequest() {
+	public JwtRequest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AuthRequest(String userEmail, String password) {
+	public JwtRequest(String userEmail, String password) {
 		super();
 		this.userEmail = userEmail;
 		this.password = password;

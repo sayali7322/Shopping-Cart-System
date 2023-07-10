@@ -25,6 +25,7 @@ public class Product {
 	private String category;
 	private String description;
 	private String productImage;
+	private int productQuantity;
 	
 	   
 	public Product() {
@@ -33,7 +34,7 @@ public class Product {
 
 
 	public Product(int productId, String productName, double price, String category, String description,
-			String productImage) {
+			String productImage, int productQuantity) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -41,6 +42,7 @@ public class Product {
 		this.category = category;
 		this.description = description;
 		this.productImage = productImage;
+		this.productQuantity = productQuantity;
 	}
 
 
@@ -102,5 +104,17 @@ public class Product {
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
 	}
+
+
+	public int getProductQuantity() {
+		return productQuantity;
+	}
+
+
+	public void setProductQuantity(int productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+	
+	
 	
 }

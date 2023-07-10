@@ -2,7 +2,8 @@ package org.springframework.boot.userservice.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.userservice.dto.AuthRequest;
+import org.springframework.boot.userservice.dto.JwtRequest;
+import org.springframework.boot.userservice.dto.JwtResponse;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.service.JwtService;
 import org.springframework.boot.userservice.service.UserService;
@@ -67,34 +68,7 @@ public class UserController {
 		return userObj;
 	}
 	
-	
-//	@PostMapping("/login")
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	public User loginUser(@RequestBody User user) throws Exception {
-//
-//		String tempEmailId = user.getUserEmail();
-//	    String tempPassword = user.getPassword();
-//	   
-//	    if (tempEmailId != null && tempPassword != null) {
-//	        // Retrieve the user from the database based on the email
-//	        User userFromDatabase = service.fetchUserByEmailId(tempEmailId);
-//
-//	        if (userFromDatabase != null) {
-//	            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//	            // Compare the input password with the stored password
-//	            if (passwordEncoder.matches(tempPassword, userFromDatabase.getPassword())) {
-//	                // Passwords match, return the user
-////	                return "Login Successful";
-//	            	return user;
-//	            }
-//	        }
-//	    }
-//
-//	    throw new Exception("Bad Credentials!");
-//		
-//	}
 
-	
 	@PostMapping("/login")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<User> loginUser(@RequestBody User user) throws Exception {
@@ -124,7 +98,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/authenticate")
-	public String authenticateAndGetToken(@RequestBody AuthRequest authrequest) {
+	public String authenticateAndGetToken(@RequestBody JwtRequest authrequest) {
 		Authentication auth = authmanager.authenticate(new UsernamePasswordAuthenticationToken(authrequest.getUserEmail(),authrequest.getPassword()));
 		if(auth.isAuthenticated()) {
 			return jwtService.generateToken(authrequest.getUserEmail());
@@ -133,4 +107,5 @@ public class UserController {
 			throw new UsernameNotFoundException("Could not found the user :"+authrequest.getUserEmail());
 		}
 	}
+	
 }

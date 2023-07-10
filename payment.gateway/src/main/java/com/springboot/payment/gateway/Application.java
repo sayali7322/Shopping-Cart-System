@@ -1,4 +1,4 @@
-package com.mohit.payment.gateway;
+package com.springboot.payment.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

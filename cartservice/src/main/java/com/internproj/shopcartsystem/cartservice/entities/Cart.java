@@ -1,6 +1,7 @@
 package com.internproj.shopcartsystem.cartservice.entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,24 +23,28 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartId;
-	private  int userId;
+	private String userEmail;
 	private int quantity;
-	private int prodId;
-	private String prodName;
+	private int productId;
+	private String productName;
 	private double totalAmount;
+	private double price;
+	private String productImage;
 	
 	public Cart() {
 		
 	}
 
-	public Cart(int cartId, int userId, int quantity, int prodId, String prodName, double totalAmount) {
+	public Cart(int cartId, String userEmail, int quantity, int productId, String productName, double totalAmount, double price, String productImage ) {
 		super();
 		this.cartId = cartId;
-		this.userId = userId;
+		this.userEmail = userEmail;
 		this.quantity = quantity;
-		this.prodId = prodId;
-		this.prodName = prodName;
+		this.productId = productId;
+		this.productName = productName;
 		this.totalAmount = totalAmount;
+		this.price = price;
+		this.productImage = productImage;
 	}
 
 	public int getCartId() {
@@ -50,12 +55,13 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public int getUserId() {
-		return userId;
+
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public int getQuantity() {
@@ -66,20 +72,20 @@ public class Cart {
 		this.quantity = quantity;
 	}
 
-	public int getProdId() {
-		return prodId;
+	public int getProductId() {
+		return productId;
 	}
 
-	public void setProdId(int prodId) {
-		this.prodId = prodId;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
-	public String getProdName() {
-		return prodName;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public double getTotalAmount() {
@@ -88,6 +94,22 @@ public class Cart {
 
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 	
 	

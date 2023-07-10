@@ -18,7 +18,7 @@ import com.internproj.shopcartsystem.cartservice.entities.Cart;
 import com.internproj.shopcartsystem.cartservice.services.CartService;
 @RestController
 @RequestMapping("/cart")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CartController {
 	
 	@Autowired
@@ -28,14 +28,14 @@ public class CartController {
 	public String addToCart(@RequestBody Cart cart) {
 		return cartService.addToCart(cart);
 	}
-	@DeleteMapping("/removeFromCart/{cartId}")
-	public void deleteFromCart(@PathVariable int cartId) {
-		cartService.deleteFromCart(cartId);
+	@DeleteMapping("/removeFromCart/{cartId}/{productId}")
+	public void deleteFromCart(@PathVariable int cartId,@PathVariable int productId) {
+		cartService.deleteFromCart(cartId, productId);
 	}
 	
-	@PutMapping("/changeQuantity/{cartId}/{quantity}")
-	public void changeQuantity(@PathVariable int cartId,@PathVariable int quantity) {
-		cartService.changeQuantity(cartId, quantity);
+	@PutMapping("/changeQuantity/{cartId}/{productId}/{quantity}")
+	public void changeQuantity(@PathVariable int cartId,@PathVariable int productId,@PathVariable int quantity) {
+		cartService.changeQuantity(cartId, productId,quantity);
 	}
 	
 	@GetMapping("/viewCart")

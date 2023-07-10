@@ -1,4 +1,4 @@
-package com.mohit.payment.gateway;
+package com.springboot.payment.gateway;
 import java.math.BigInteger;
 
 import org.json.JSONObject;
