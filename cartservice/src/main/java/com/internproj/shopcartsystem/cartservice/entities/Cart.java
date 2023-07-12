@@ -23,7 +23,6 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartId;
-	private String userEmail;
 	private int quantity;
 	private int productId;
 	private String productName;
@@ -35,10 +34,9 @@ public class Cart {
 		
 	}
 
-	public Cart(int cartId, String userEmail, int quantity, int productId, String productName, double totalAmount, double price, String productImage ) {
+	public Cart(int cartId, int quantity, int productId, String productName, double totalAmount, double price, String productImage ) {
 		super();
 		this.cartId = cartId;
-		this.userEmail = userEmail;
 		this.quantity = quantity;
 		this.productId = productId;
 		this.productName = productName;
@@ -53,15 +51,6 @@ public class Cart {
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
-	}
-
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
 	}
 
 	public int getQuantity() {

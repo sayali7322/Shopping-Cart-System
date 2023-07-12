@@ -24,7 +24,7 @@ public class CartService {
         
         if (product != null) {
            
-            Cart existingCart = cartRepository.findByUserEmail(cart.getUserEmail());
+            Cart existingCart = cartRepository.findByProductName(product.getProductName());
 
             if (existingCart != null) {
                 
@@ -52,7 +52,7 @@ public class CartService {
 
             return "Added to cart";
         } else {
-            throw new CartNotFoundException("Invalid product ID or profile ID");
+            throw new CartNotFoundException("Invalid product ID");
         }
     }
 

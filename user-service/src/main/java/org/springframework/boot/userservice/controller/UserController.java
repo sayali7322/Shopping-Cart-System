@@ -1,12 +1,15 @@
 package org.springframework.boot.userservice.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.dto.JwtRequest;
 import org.springframework.boot.userservice.dto.JwtResponse;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.service.JwtService;
 import org.springframework.boot.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @RestController
 @RequestMapping("/user")
@@ -97,15 +102,64 @@ public class UserController {
 		return service.removeUser(userId);
 	}
 	
-	@PostMapping("/authenticate")
-	public String authenticateAndGetToken(@RequestBody JwtRequest authrequest) {
-		Authentication auth = authmanager.authenticate(new UsernamePasswordAuthenticationToken(authrequest.getUserEmail(),authrequest.getPassword()));
-		if(auth.isAuthenticated()) {
-			return jwtService.generateToken(authrequest.getUserEmail());
-		}
-		else {
-			throw new UsernameNotFoundException("Could not found the user :"+authrequest.getUserEmail());
-		}
-	}
 	
+//	public String authenticateAndGetToken(@RequestBody JwtRequest authrequest) {
+//		Authentication auth = authmanager.authenticate(new UsernamePasswordAuthenticationToken(authrequest.getUserEmail(),authrequest.getPassword()));
+//		if(auth.isAuthenticated()) {
+//			return jwtService.generateToken(authrequest.getUserEmail());
+//		}
+//		else {
+//			throw new UsernameNotFoundException("Could not found the user :"+authrequest.getUserEmail());
+//		}
+//	}
+	
+	/*
+	 * @PostMapping("/authenticate")
+	 * 
+	 * @CrossOrigin(origins = "http://localhost:4200") public
+	 * ResponseEntity<Map<String, String>> login(@RequestBody User user) { String
+	 * emailId = user.getUserEmail(); String password = user.getPassword();
+	 * 
+	 * try { // Attempt authentication Authentication authentication =
+	 * authmanager.authenticate(new UsernamePasswordAuthenticationToken(emailId,
+	 * password));
+	 * 
+	 * // Authentication successful UserDetails userDetails = (UserDetails)
+	 * authentication.getPrincipal(); String token =
+	 * jwtService.generateToken(emailId); // Pass UserDetails to include authority
+	 * information
+	 * 
+	 * // Return the JWT token in the response Map<String, String> response = new
+	 * HashMap<>(); response.put("token", token); return
+	 * ResponseEntity.ok().body(response); } catch (AuthenticationException e) { //
+	 * Authentication failed, handle the exception return
+	 * ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); } }
+	 */
+	
+	
+	@PostMapping("/authenticate")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
+	    String emailId = user.getUserEmail();
+	    String password = user.getPassword();
+	    
+	    try {
+	        // Attempt authentication
+	        Authentication authentication = authmanager.authenticate(new UsernamePasswordAuthenticationToken(emailId, password));
+
+	        // Authentication successful
+	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        String token = jwtService.generateToken(emailId); // Pass UserDetails to include authority information
+	        // Return the JWT token and user details in the response
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("token", token);
+	         // Add user details to the response
+
+	        return ResponseEntity.ok().body(response);
+	    } catch (AuthenticationException e) {
+	        // Authentication failed, handle the exception
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+	    }
+	}
+
 }

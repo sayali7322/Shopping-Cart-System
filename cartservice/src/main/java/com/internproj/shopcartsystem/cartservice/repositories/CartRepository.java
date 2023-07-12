@@ -10,6 +10,5 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
 
 	Cart findByProductName(String productName);
 
-	Cart findByUserEmail(String userEmail);
 
 }
