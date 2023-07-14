@@ -32,6 +32,8 @@ public class UserService {
 		User user = userRepository.findById(userId).orElse(null);
 		return user;	
 	}
+	
+	
 
 //	public List<User> addUsers(List<User> users) {
 //		return userRepository.saveAll(users);

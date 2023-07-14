@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.dto.JwtRequest;
 import org.springframework.boot.userservice.dto.JwtResponse;
 import org.springframework.boot.userservice.entrity.User;
+import org.springframework.boot.userservice.filter.JwtAuthFilter;
 import org.springframework.boot.userservice.service.JwtService;
 import org.springframework.boot.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,10 @@ public class UserController {
 		return service.findUserById(userId);
 	}
 	
+	@GetMapping("/getUserByEmail/{userEmail}")
+	public User fetchUserByEmailId(String userEmail) {
+		return service.fetchUserByEmailId(userEmail);
+	}
 	
 	@PostMapping("/registerUser")
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -160,6 +165,11 @@ public class UserController {
 	        // Authentication failed, handle the exception
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	    }
+	}
+	
+	@GetMapping("/getCurrentUser")
+	public String getCurrentUser() {
+		return JwtAuthFilter.CURRENT_USER;
 	}
 
 }

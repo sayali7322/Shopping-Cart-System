@@ -11,4 +11,10 @@ public interface UserService {
 	
 	@GetMapping("/getUserById/{userId}")
 	public User getUserById(@PathVariable int userId);
+	
+	@GetMapping("/getCurrentUser")
+	public String getCurrentUser();
+	
+	@GetMapping("/getUserByEmail/{userEmail}")
+	public User fetchUserByEmailId(String userEmail);
 }
