@@ -1,14 +1,18 @@
 package org.springframework.boot.userservice.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.userservice.dto.JwtRequest;
 import org.springframework.boot.userservice.dto.JwtResponse;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.filter.JwtAuthFilter;
 import org.springframework.boot.userservice.service.JwtService;
+import org.springframework.boot.userservice.service.UserDetailsImpl;
 import org.springframework.boot.userservice.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +25,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,7 +52,7 @@ public class UserController {
 	private JwtService jwtService;
 	
 	@Autowired
-	private AuthenticationManager authmanager;
+	AuthenticationManager authenticationManager;
 	
 	 @Autowired
 	 public PasswordEncoder passwordEncoder;
@@ -150,7 +160,7 @@ public class UserController {
 	    
 	    try {
 	        // Attempt authentication
-	        Authentication authentication = authmanager.authenticate(new UsernamePasswordAuthenticationToken(emailId, password));
+	        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(emailId, password));
 
 	        // Authentication successful
 	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -158,14 +168,35 @@ public class UserController {
 	        // Return the JWT token and user details in the response
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("token", token);
+	        response.put("userRole", authentication.getAuthorities().toString());
 	         // Add user details to the response
-
+//	        List<GrantedAuthority> authorities = new ArrayList<>();
+//		    authorities.add(new SimpleGrantedAuthority(user.getUserRole()));
+//	        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+//				.collect(Collectors.toList());
 	        return ResponseEntity.ok().body(response);
+//	        return ResponseEntity.ok().body(new JwtResponse(
+//					userDetails.getUserId(), userDetails.getUsername(), userDetails.getUserEmail(), roles, jwt));
 	    } catch (AuthenticationException e) {
 	        // Authentication failed, handle the exception
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	    }
 	}
+	
+//	@PostMapping("/authenticate")
+//	public ResponseEntity<?> authenticateUser(@Valid @RequestBody JwtRequest loginRequest) {
+//		Authentication authentication = authenticationManager.authenticate(
+//				new UsernamePasswordAuthenticationToken(loginRequest.getUserEmail(), loginRequest.getPassword()));
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		String jwt = jwtService.createToken(authentication);
+//		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//		ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+//		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+//				.collect(Collectors.toList());
+//		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(new UserInfoResponse(
+//				userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles, jwt));
+//	}
+
 	
 	@GetMapping("/getCurrentUser")
 	public String getCurrentUser() {

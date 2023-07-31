@@ -11,6 +11,7 @@ import org.springframework.boot.userservice.dto.JwtRequest;
 import org.springframework.boot.userservice.dto.JwtResponse;
 import org.springframework.boot.userservice.entrity.User;
 import org.springframework.boot.userservice.repository.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;

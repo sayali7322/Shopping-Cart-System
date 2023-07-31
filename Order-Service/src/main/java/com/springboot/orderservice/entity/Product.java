@@ -3,7 +3,6 @@ package com.springboot.orderservice.entity;
 import org.springframework.stereotype.Component;
 
 
-@Component
 public class Product {
 	private int productId;
 	private String productName;
@@ -13,20 +12,17 @@ public class Product {
 	private String productImage;
 	private int productQuantity;
 	
-	public Product() {
-		
-	}
-
-	public Product(int productId, String productName, double price, String category, String description,
-			String productImage, int productQuantity) {
-		super();
-		this.productId = productId;
-		this.productName = productName;
-		this.price = price;
-		this.category = category;
-		this.description = description;
-		this.productImage = productImage;
-	}
+	/*
+	 * public Product() {
+	 * 
+	 * }
+	 * 
+	 * public Product(int productId, String productName, double price, String
+	 * category, String description, String productImage, int productQuantity) {
+	 * super(); this.productId = productId; this.productName = productName;
+	 * this.price = price; this.category = category; this.description = description;
+	 * this.productImage = productImage; }
+	 */
 
 	public int getProductId() {
 		return productId;

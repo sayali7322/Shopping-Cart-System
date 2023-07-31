@@ -20,22 +20,17 @@ public class User {
 	private String userRole;
 	
 	
-	public User() {
-		
-	}
-
-	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
-			String password, String userRole) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.phoneNo = phoneNo;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.password = password;
-		this.userRole = userRole;
-	}
+	/*
+	 * public User() {
+	 * 
+	 * }
+	 * 
+	 * public User(int userId, String userName, String userEmail, long phoneNo,
+	 * LocalDate dateOfBirth, String gender, String password, String userRole) {
+	 * super(); this.userId = userId; this.userName = userName; this.userEmail =
+	 * userEmail; this.phoneNo = phoneNo; this.dateOfBirth = dateOfBirth;
+	 * this.gender = gender; this.password = password; this.userRole = userRole; }
+	 */
 
 	public int getUserId() {
 		return userId;
