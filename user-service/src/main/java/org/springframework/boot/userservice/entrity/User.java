@@ -24,8 +24,8 @@ public class User {
 	private String userEmail;
 	private long phoneNo;
 //	@JsonFormat(pattern = "dd-mm-yyyy")
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateOfBirth;
+//	@JsonFormat(pattern = "yyyy-MM-dd")
+//	private LocalDate dateOfBirth;
 	private String gender;
 	private String password;
 	private String userRole;
@@ -39,14 +39,14 @@ public class User {
 		
 	}
 
-	public User(int userId, String userName, String userEmail, long phoneNo, LocalDate dateOfBirth, String gender,
+	public User(int userId, String userName, String userEmail, long phoneNo, String gender,
 			String password, String userRole, List<Rating> ratings) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
 		this.phoneNo = phoneNo;
-		this.dateOfBirth = dateOfBirth;
+//		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.password = password;
 		this.userRole = userRole;
@@ -85,13 +85,13 @@ public class User {
 		this.phoneNo = phoneNo;
 	}
 
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-	}
+//	public LocalDate getDateOfBirth() {
+//		return dateOfBirth;
+//	}
+//
+//	public void setDateOfBirth(String dateOfBirth) {
+//		this.dateOfBirth = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+//	}
 
 	public String getGender() {
 		return gender;
@@ -125,14 +125,14 @@ public class User {
 		this.ratings = ratings;
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+//	public void setDateOfBirth(LocalDate dateOfBirth) {
+//		this.dateOfBirth = dateOfBirth;
+//	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", phoneNo=" + phoneNo
-				+ ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", password=" + password + ", userRole="
+				+  ", gender=" + gender + ", password=" + password + ", userRole="
 				+ userRole + ", ratings=" + ratings + "]";
 	}
 	
